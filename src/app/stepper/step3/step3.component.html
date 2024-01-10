@@ -1,0 +1,36 @@
+<h3>Step 3: Summary</h3>
+<h4>Your Tesla: {{ results.model.description }}</h4>
+<table class="table">
+  <tbody>
+    <tr>
+      <td>
+        <strong>{{ results.config.description }}</strong>
+        <br />
+        Range: {{ results.config.range }} miles - Max Speed:
+        {{ results.config.speed }}
+      </td>
+      <td>{{ results.config.price | currency : "USD" }}</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>{{ results.color.description }} </strong>
+      </td>
+      <td>{{ results.color.price | currency : "USD" }}</td>
+    </tr>
+    @if(results.includeYoke){
+    <tr>
+      <td><strong>Yoke Steering Wheel Package </strong></td>
+      <td>{{ 1000 | currency : "USD" }}</td>
+    </tr>
+    } @if(results.includeTow){
+    <tr>
+      <td><strong>Tow Hitch Package </strong></td>
+      <td>{{ 1000 | currency : "USD" }}</td>
+    </tr>
+    }
+    <tr>
+      <td><strong>TOTAL COST </strong></td>
+      <td>{{ results.totalCost | currency : "USD" }}</td>
+    </tr>
+  </tbody>
+</table>

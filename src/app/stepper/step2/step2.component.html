@@ -1,0 +1,39 @@
+<h3>Step 2: Select your config and options</h3>
+<form [formGroup]="carConfigOptionsForm">
+  <div class="form-group col-3">
+    <label for="configSelect">Config</label>
+    <select class="form-control" id="configSelect" formControlName="config">
+      @for (config of carConfigs; track config.id) {
+      <option [value]="config.id">
+        {{ config.description }}
+      </option>
+      }
+    </select>
+  </div>
+  @if(selectedConfig){ Range: {{ selectedConfig.range }} miles - Max Speed:
+  {{ selectedConfig.speed }} - Cost:
+  {{ selectedConfig.price | currency : "USD" }}
+  } @if(showTow){
+  <div class="form-group form-check">
+    <input
+      type="checkbox"
+      class="form-check-input"
+      id="includeTow"
+      formControlName="includeTow"
+    />
+    <label class="form-check-label" for="includeTow">Tow hitch?</label>
+  </div>
+  } @if(showYoke){
+  <div class="form-group form-check">
+    <input
+      type="checkbox"
+      class="form-check-input"
+      id="includeYoke"
+      formControlName="includeYoke"
+    />
+    <label class="form-check-label" for="includeYoke"
+      >Yoke steering wheel?</label
+    >
+  </div>
+  }
+</form>

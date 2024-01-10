@@ -1,0 +1,25 @@
+<h3>Step 1: Choose your model and color</h3>
+<form [formGroup]="carModelColorForm" class="col-12 row">
+  <div class="form-group col-3">
+    <label for="modelSelect">Model</label>
+    <select class="form-control" id="modelSelect" formControlName="model">
+      @for (model of carModels; track model.code) {
+      <option [value]="model.code">
+        {{ model.description }}
+      </option>
+      }
+    </select>
+  </div>
+  @if(carColors.length){
+  <div class="form-group col-3">
+    <label for="colorSelect">Color</label>
+    <select class="form-control" id="colorSelect" formControlName="color">
+      @for (color of carColors; track color.code) {
+      <option [value]="color.code">
+        {{ color.description }}
+      </option>
+      }
+    </select>
+  </div>
+  }
+</form>
