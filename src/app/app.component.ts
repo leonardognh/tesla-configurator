@@ -14,8 +14,6 @@ import { CarService } from './shared/services/car.service';
 export class AppComponent implements OnInit {
   currentStep: number = 1;
   imageUrl = '';
-  stepOneValid: boolean = false;
-  stepTwoValid: boolean = false;
   constructor(
     private _router: Router,
     private _stepperService: StepperService,
