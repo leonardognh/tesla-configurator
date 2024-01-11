@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { AsyncPipe, JsonPipe } from '@angular/common';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { StepperService } from './shared/services/stepper.service';
 import { CarService } from './shared/services/car.service';
+import { Subject, takeUntil } from 'rxjs';
+import { AsyncPipe, JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -11,30 +12,41 @@ import { CarService } from './shared/services/car.service';
   providers: [StepperService, CarService],
   templateUrl: './app.component.html',
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   currentStep: number = 1;
-  imageUrl = '';
+  imageUrl: string = '';
+  private _unsubscribeAll = new Subject();
   constructor(
     private _router: Router,
     private _stepperService: StepperService,
     private _carService: CarService
   ) {}
+
   ngOnInit(): void {
-    this._getImageChange();
+    this.getImageChange();
   }
-  goToStep(step: number) {
-    if (
+
+  goToStep(step: number): void {
+    const isStepValid =
       this._stepperService.isStepValid(step - 1) ||
       step === 0 ||
-      this.currentStep > step
-    ) {
+      this.currentStep > step;
+
+    if (isStepValid) {
       this.currentStep = step + 1;
       this._router.navigate([`/step${this.currentStep}`]);
     }
   }
-  private _getImageChange() {
-    this._carService.carResult.imageUrl$.subscribe((url) => {
-      this.imageUrl = url;
-    });
+
+  private getImageChange(): void {
+    this._carService.carResult.imageUrl$
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((url) => {
+        this.imageUrl = url;
+      });
+  }
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next(null);
+    this._unsubscribeAll.complete();
   }
 }

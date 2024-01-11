@@ -17,7 +17,7 @@ export class Step3Component implements OnInit {
     this._getResult();
   }
   private _getResult() {
-    this._carService.totalCost();
+    this._carService.getTotalCost();
     this.results = this._carService.carResult;
   }
 }
