@@ -16,7 +16,7 @@ export class Step3Component implements OnInit {
   ngOnInit(): void {
     this._getResult();
   }
-  private _getResult() {
+  private _getResult(): void {
     this._carService.getTotalCost();
     this.results = this._carService.carResult;
   }

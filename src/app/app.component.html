@@ -4,6 +4,7 @@
     [id]="'step' + step"
     class="col-2 btn btn-outline-secondary m-2"
     [class.active]="currentStep === step"
+    [class.disabled]="isDisabled[step - 1]"
     (click)="goToStep(step - 1)"
   >
     Step {{ step }}

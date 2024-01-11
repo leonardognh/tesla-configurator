@@ -16,6 +16,7 @@ export class AppComponent implements OnInit, OnDestroy {
   currentStep: number = 1;
   imageUrl: string = '';
   private _unsubscribeAll = new Subject();
+  isDisabled: boolean[];
   constructor(
     private _router: Router,
     private _stepperService: StepperService,
@@ -24,6 +25,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getImageChange();
+    this.isDisabled = this._stepperService.isStepDisabled();
   }
 
   goToStep(step: number): void {
