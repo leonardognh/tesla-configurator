@@ -6,7 +6,7 @@ import { Model } from './model';
 export class CarResult {
   model: Model;
   color: Color;
-  config: Config;
+  config: Config | null;
   includeYoke: boolean;
   includeTow: boolean;
   totalCost: number;

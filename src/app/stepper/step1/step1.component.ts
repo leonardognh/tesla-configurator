@@ -63,10 +63,16 @@ export class Step1Component implements OnInit {
       .valueChanges.subscribe((selectedModel: string) => {
         const model = this.carModels.find((x) => x.code === selectedModel)!;
         this.carColors = model.colors;
-        this.carModelColorForm.get('color')!.setValue(model.colors[0].code);
+        this.carModelColorForm.controls['color']!.setValue(
+          model.colors[0].code
+        );
         this._carService.carResult.imageUrl$.next(
           `https://interstate21.com/tesla-app/images/${selectedModel}/${model.colors[0].code}.jpg`
         );
+
+        if (this.carModelColorForm.controls['model']?.dirty) {
+          this._cleanStep2();
+        }
       });
   }
   private _colorValueChange() {
@@ -74,7 +80,7 @@ export class Step1Component implements OnInit {
       .get('color')!
       .valueChanges.subscribe((selectedColor: string) => {
         const color = this.carColors.find((x) => x.code === selectedColor)!;
-        const model = this.carModelColorForm.get('model')!.value;
+        const model = this.carModelColorForm.controls['model']!.value;
         this._carService.carResult.imageUrl$.next(
           `https://interstate21.com/tesla-app/images/${model}/${color.code}.jpg`
         );
@@ -83,8 +89,14 @@ export class Step1Component implements OnInit {
   private _checkExistingData() {
     const { model, color } = this._carService.carResult;
     if (model && color) {
-      this.carModelColorForm.get('model')!.setValue(model.code);
-      this.carModelColorForm.get('color')!.setValue(color.code);
+      this.carModelColorForm.controls['model']!.setValue(model.code);
+      this.carModelColorForm.controls['color']!.setValue(color.code);
     }
+  }
+  private _cleanStep2() {
+    this._carService.carResult.includeTow = false;
+    this._carService.carResult.includeYoke = false;
+    this._carService.carResult.config = null;
+    this._stepperService.setStepValidation(1, false);
   }
 }

@@ -20,7 +20,7 @@ export class CarService {
   }
   totalCost() {
     let total = 0;
-    total += this.carResult.config.price;
+    total += this.carResult.config?.price!;
     total += this.carResult.color.price;
     total += this.carResult.includeYoke ? 1000 : 0;
     total += this.carResult.includeTow ? 1000 : 0;

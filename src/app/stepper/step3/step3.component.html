@@ -4,12 +4,12 @@
   <tbody>
     <tr>
       <td>
-        <strong>{{ results.config.description }}</strong>
+        <strong>{{ results.config?.description }}</strong>
         <br />
-        Range: {{ results.config.range }} miles - Max Speed:
-        {{ results.config.speed }}
+        Range: {{ results.config?.range }} miles - Max Speed:
+        {{ results.config?.speed }}
       </td>
-      <td>{{ results.config.price | currency : "USD" }}</td>
+      <td>{{ results.config?.price | currency : "USD" }}</td>
     </tr>
     <tr>
       <td>
